@@ -1,0 +1,345 @@
+{% extends 'mom/base.html' %}
+{% load static %}
+{% block body %}
+
+
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header wow fadeIn jal-go" data-wow-delay="0.1s">
+        <div class="container">
+            <h1 class="display-3 mb-3 animated slideInDown jal-go">매물 상세</h1>
+            <nav class="breadcrumb animated slideInDown ps-1">
+                <ol class="breadcrumb mb-0">
+                    {% if '지식산업센터' in 매물.매물종류 %}<li class="breadcrumb-item"><a class="text-body" href="#">지식산업센터</a></li>
+                    {% else %}
+                    <li class="breadcrumb-item"><a class="text-body" href="#">{{ 매물.매물종류 }}</a></li>
+                    {% endif %}
+                    <li class="breadcrumb-item"><a class="text-body" href="#">{{ 매물.거래종류 }}</a></li>
+                    <li class="breadcrumb-item text-dark active" aria-current="page">{% if 매물.매매가억 %}
+                      <span>{{ 매물.매매가억 }}억 </span>
+                     {% endif %}{{ 매물.매매가 }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+    <!-- Blog Start -->
+    <div class="container-xxl py-6">
+        <div class="container">
+
+            <div class="section-header text-center mx-auto mb-5 wow fadeIn" data-wow-delay="0.1s" style="max-width: 500px;">
+                {% if '지식산업센터' in 매물.매물종류 %}<h1 class="display-5 mb-3 jal-go">지식산업센터 매물</h1>
+                {% else %}
+                <h1 class="display-5 mb-3 jal-go">{{ 매물.매물종류 }} 매물</h1>
+                {% endif %}
+            </div>
+
+            {% if user.is_superuser %}
+            <div class="d-flex flex-row-reverse mb-3 wow fadeIn" data-wow-delay="0.1s">
+              <div class="text-end"><a class="btn btn-secondary btn-sm jal-go" onclick="confirmDelete(event)" role="button" style="border-radius: 3px; padding-top: 5px;">삭제</a></div>
+              <form id="deleteForm" method="post" style="display:none;" action="{% url "delete_property" %}">
+                {% csrf_token %}
+                <input type="hidden" name="property_id" value="{{ 매물.id }}">
+              </form>
+
+              <div class="text-end pe-2"><a class="btn btn-primary btn-sm jal-go" href="{% url "sell_update" 매물.id %}" role="button" style="border-radius: 3px; padding-top: 5px;">수정</a></div>
+            </div>
+            {% endif %}
+
+              <div class="row wow fadeIn" data-wow-delay="0.1s">
+
+                <div class="col-lg">
+                  <div class="splide mx-auto shadow-lg" role="group" aria-label="Splide Basic HTML Example" id="main-carousel">
+                    <div class="splide__track">
+                      <ul class="splide__list">
+                        {% for 사진 in 사진 %}
+                        <li class="splide__slide">
+                            <img class="img-fluid" src="{{MEDIA_URL}}{{사진.이미지}}">
+                        </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <ul id="thumbnails" class="thumbnails shadow">
+                    {% for 사진 in 사진 %}
+                    <li class="thumbnail">
+                      <img src="{{MEDIA_URL}}{{사진.이미지}}">
+                    </li>
+                    {% endfor %}
+                  </ul>
+
+                </div>
+
+                
+
+                <div class="col d-flex flex-column justify-content-center fw-bold mt-2">
+                  <div class="row">
+                    
+                    <div class="row mt-3">
+                      <p class="text-center fs-2 text-dark jal-go">{{ 매물.제목 }}</p>
+                    </div>
+                    <div class="col-12 p-3 border-bottom border-dark">
+                      <div class="row">
+                        <div class="col-6 column_label">
+                          분양가
+                        </div>
+                        <div class="col-6">
+                        {% if 매물.매매가억 %}
+                         <span>{{ 매물.매매가억 }}억 </span>
+                        {% endif %}
+                         {{ 매물.매매가 }} 만원
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-6 p-3 border-bottom border-dark">
+                      <div class="row">
+                        <div class="col-6 column_label">
+                          공급면적
+                        </div>
+                        <div class="col-6">
+                          {{ 매물.공급면적 }} 평 / {{ 매물.공면치환 }}m<sup>2</sup>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-6 p-3 border-bottom border-dark">
+                      <div class="row">
+                        <div class="col-6 column_label">
+                          m<sup>2</sup>당 가격
+                        </div>
+                        <div class="col-6">
+                          {{ 매물.공면가격 }} 만원/m<sup>2</sup>
+                        </div>
+                      </div>
+                    </div>
+ 
+
+                    <div class="col-6 p-3 border-bottom border-dark">
+                      <div class="row">
+                        <div class="col-6 column_label">
+                          전용면적
+                        </div>
+                        <div class="col-6">
+                          {{ 매물.전용면적 }} 평 / {{ 매물.전면치환 }}m<sup>2</sup>
+                        </div>
+                      </div>
+                    </div>
+ 
+
+                    <div class="col-6 p-3 border-bottom border-dark">
+                      <div class="row">
+                        <div class="col-6 column_label">
+                          m<sup>2</sup>당 가격
+                        </div>
+                        <div class="col-6">
+                          {{ 매물.전면가격 }} 만원/m<sup>2</sup>
+                        </div>
+                      </div>
+                    </div>
+ 
+
+                    <div class="col-6 p-3 border-bottom border-dark">
+                      <div class="row">
+                        <div class="col-6 column_label">
+                          방향
+                        </div>
+                        <div class="col-6">
+                          {{ 매물.방향 }}
+                        </div>
+                      </div>
+                    </div>
+ 
+
+                    <div class="col-6 p-3 border-bottom border-dark">
+                      <div class="row">
+                        <div class="col-6 column_label">
+                          해당층
+                        </div>
+                        <div class="col-6">
+                          {{ 매물.해당층 }} 층
+                        </div>
+                      </div>
+                    </div>
+ 
+
+                    <div class="col-6 p-3 border-bottom border-dark">
+                      <div class="row">
+                        <div class="col-6 column_label">
+                          전체층
+                        </div>
+                        <div class="col-6">
+                          {{ 매물.전체층 }} 층
+                        </div>
+                      </div>
+                    </div>
+ 
+
+                    <div class="col-6 p-3 border-bottom border-dark">
+                      <div class="row">
+                        <div class="col-6 column_label">
+                          난방
+                        </div>
+                        <div class="col-6">
+                          {{ 매물.난방 }}
+                        </div>
+                      </div>
+                    </div>
+ 
+
+                    <div class="col-6 p-3 border-bottom border-dark">
+                      <div class="row">
+                        <div class="col-6 column_label">
+                          주차
+                        </div>
+                        <div class="col-6">
+                          {{ 매물.주차 }}
+                        </div>
+                      </div>
+                    </div>
+ 
+
+                    <div class="col-6 p-3 border-bottom border-dark">
+                      <div class="row">
+                        <div class="col-6 column_label">
+                          관리비
+                        </div>
+                        <div class="col-6">
+                          {{ 매물.주차비 }} 만원
+                        </div>
+                      </div>
+                    </div>
+ 
+
+                    <div class="col-6 p-3 border-bottom border-dark">
+                      <div class="row">
+                        <div class="col-6 column_label">
+                          입주일
+                        </div>
+                        <div class="col-6">
+                          {{ 매물.입주일 }}
+                        </div>
+                      </div>
+                    </div>
+ 
+
+                    <div class="col-6 p-3 border-bottom border-dark">
+                      <div class="row">
+                        <div class="col-6 column_label">
+                          사용승인일
+                        </div>
+                        <div class="col-6">
+                          {{ 매물.사용승인일 }}
+                        </div>
+                      </div>
+                    </div>
+ 
+
+                    <div class="col-12 p-3 border-bottom border-dark">
+                      <div class="row">
+                        <div class="col-5 column_label">
+                          테마
+                        </div>
+                        <div class="col-auto">
+                          {{ 매물.테마 }}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 p-3 border-bottom border-dark">
+                      <div class="row border-dark">
+                        <div class="col-3 column_label">
+                          위치
+                        </div>
+                        <div class="col-6 text-center">
+                          {{ 매물.지역 }}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 p-3 border-bottom border-dark">
+                      <div class="row border-dark">
+                        <div class="col-3 column_label">
+                          네이버 주소
+                        </div>
+                        <div class="col-6 text-center">
+                          {% if 매물.네이버주소 %}
+                          <a href="https://{{ 매물.네이버주소 }}">바로가기</a>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row mt-5">
+                  <div class="col d-flex align-items-center justify-content-center jal-go fs-1 text-dark mt-5">
+                    설명
+                  </div>
+                </div>
+
+                <div class="row mt-5">
+                  <div class="col d-flex flex-column align-items-center justify-content-center">
+                    {{ 매물.내용|safe }}
+                  </div>
+                </div>
+      
+
+              </div>
+        </div>
+    </div>
+    <!-- Blog End -->
+    <script src="{% static 'mom/js/splide.min.js' %}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var splide = new Splide('#main-carousel', {
+          type   : 'fade',
+          rewind: true,
+
+        })
+      // Collects LI elements:
+      var thumbnails = document.getElementsByClassName( 'thumbnail' );
+      var current;
+
+      for ( var i = 0; i < thumbnails.length; i++ ) {
+        initThumbnail( thumbnails[ i ], i );
+      }
+
+      // The function to initialize each thumbnail.
+      function initThumbnail( thumbnail, index ) {
+        thumbnail.addEventListener( 'click', function () {
+          splide.go( index );
+        } );
+      }
+
+      splide.on( 'mounted move', function () {
+        var thumbnail = thumbnails[ splide.index ];
+      
+        if ( thumbnail ) {
+          if ( current ) {
+            current.classList.remove( 'is-active' );
+          }
+      
+          thumbnail.classList.add( 'is-active' );
+          current = thumbnail;
+        }
+      } );
+      splide.mount();
+    });
+
+    
+    </script>
+    <script>
+      function confirmDelete(e) {
+        e.preventDefault(); // 기본 이벤트를 방지합니다.
+        if (confirm("정말 삭제하시겠습니까?")) {
+          document.getElementById('deleteForm').submit(); // 폼 제출
+        }
+      }
+      </script>
+{% endblock body %}
+
+

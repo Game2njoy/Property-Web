@@ -1,0 +1,417 @@
+{% extends 'mom/base.html' %}
+{% load static %}
+{% block body %}
+
+
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header wow fadeIn jal-go" data-wow-delay="0.1s">
+        <div class="container">
+            <h1 class="display-3 mb-3 animated slideInDown jal-go">매물 수정</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a class="text-body" href="#">메인</a></li>
+                    <li class="breadcrumb-item text-dark active"><a class="text-body" href="{% url "sells" %}">매물 수정</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+    <!-- Blog Start -->
+    <div class="container-xxl py-6">
+        <div class="container mb-5">
+            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <h1 class="display-5 mb-3 jal-go">매물 수정</h1>
+            </div>
+            <div class="row mb-5">
+                    <div id="uppy" class="d-flex justify-content-center wow fadeIn jal-go" data-wow-delay="0.2s"></div>
+            </div>
+            <form class="row g-3 jal-go" id="myForm" method="post" action='{% url "sell_update" 매물.id %}'>
+              {% csrf_token %}
+                <div class="col-md-6">
+                  <label for="제목" class="form-label">제목</label>
+                  <input type="text" class="form-control" id="제목" name="제목" required autocomplete='off' value="{{ 매물.제목 }}">
+                </div>
+                <div class="col-md-6">
+                  <label for="지역" class="form-label">위치</label>
+                  <input class="form-control" id="지역" name="지역" autocomplete='off' required value="{{ 매물.지역 }}">
+                  <div class="form-text">
+                    예시) 경기도 고양시 덕양구 향동동
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="매물종류" class="form-label">매물 종류</label>
+                  <select class="form-select" id="매물종류" name="매물종류" required>
+                    <option disabled value="">매물 종류를 고르세요.</option>
+                    <option value="덕지식산업센터"{% if 매물.매물종류 == "덕지식산업센터" %} selected{% endif %}>덕은 / 지식산업센터</option>
+                    <option value="향지식산업센터"{% if 매물.매물종류 == "향지식산업센터" %} selected{% endif %}>향동 / 지식산업센터</option>
+                    <option value="지식산업센터"{% if 매물.매물종류 == "지식산업센터" %} selected{% endif %}>기타 / 지식산업센터</option>
+                    <option value="아파트"{% if 매물.매물종류 == "아파트" %} selected{% endif %}>아파트</option>
+                    <option value="오피스텔"{% if 매물.매물종류 == "오피스텔" %} selected{% endif %}>오피스텔</option>
+                    <option value="상가"{% if 매물.매물종류 == "상가" %} selected{% endif %}>상가</option>
+                    <option value="사무실"{% if 매물.매물종류 == "사무실" %} selected{% endif %}>사무실</option>
+                    {% comment %} <option value="다가구/2룸/3룸"{% if 매물.매물종류 == "다가구/2룸/3룸" %} selected{% endif %}>다가구/2룸/3룸</option>
+                    <option value="점포주택매매"{% if 매물.매물종류 == "점포주택매매" %} selected{% endif %}>점포주택매매</option>
+                    <option value="토지"{% if 매물.매물종류 == "토지" %} selected{% endif %}>토지</option> {% endcomment %}
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="거래종류" class="form-label">거래 종류</label>
+                  <select class="form-select" id="거래종류" name="거래종류" required>
+                    <option disabled value="">거래 종류를 고르세요.</option>
+                    <option value="분양"{% if 매물.거래종류 == "분양" %} selected{% endif %}>분양</option>
+                    <option value="매매"{% if 매물.거래종류 == "매매" %} selected{% endif %}>매매</option>
+                    <option value="월세"{% if 매물.거래종류 == "월세" %} selected{% endif %}>월세</option>
+                    <option value="전세"{% if 매물.거래종류 == "전세" %} selected{% endif %}>전세</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <div class="row">
+                    <label for="validationDefault03" class="form-label" id="가격">가격</label>
+                    <div class="input-group col pe-0">
+                      <input type="text" pattern="\d*" class="form-control" name="가격억" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required maxlength="4" onkeyup="inputNumberFormat(this);" autocomplete='off' dir="rtl" value="{{ 매물.매매가억 }}">
+                      <span class="input-group-text">억</span>
+                    </div>
+                    <div class="input-group col ps-0">
+                      <input type="text" pattern="\d*" class="form-control" name="가격" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" id="validationDefault03" required maxlength="4" onkeyup="inputNumberFormat(this);" autocomplete='off' dir="rtl" value="{{ 매물.매매가 }}">
+                      <span class="input-group-text">만원</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label for="월세" class="form-label">월세</label>
+                  <div class="input-group">
+                    <input class="form-control" id="월세" name="월세" {% if 매물.월세 %}value="{{ 매물.월세 }}" {% endif %}readonly required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="15" onkeyup="inputNumberFormat(this);" autocomplete='off' dir="rtl">
+                    <span class="input-group-text">만원</span>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="테마" class="form-label">테마</label>
+                    <select class="form-select" id="테마" name="테마" required>
+                      <option disabled value="">테마를 고르세요.</option>
+                      <option value="지식산업센터"{% if 매물.테마 == "지식산업센터" %} selected{% endif %}>지식산업센터</option>
+                      <option value="아파트매매/전월세"{% if 매물.테마 == "아파트매매/전월세" %} selected{% endif %}>아파트매매/전월세</option>
+                      <option value="오피스텔"{% if 매물.테마 == "오피스텔" %} selected{% endif %}>오피스텔</option>
+                      <option value="사무실"{% if 매물.테마 == "사무실" %} selected{% endif %}>사무실</option>
+                      <option value="상가"{% if 매물.테마 == "상가" %} selected{% endif %}>상가</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="공급면적" class="form-label">공급면적</label>
+                    <div class="input-group">
+                      <input class="form-control" id="공급면적" name="공급면적" required autocomplete='off' dir="rtl" value="{{ 매물.공급면적 }}">
+                      <span class="input-group-text">평</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="공면가격" class="form-label">m<sup>2</sup>당 가격</label>
+                    <div class="input-group">
+                      <input class="form-control" id="공면가격" name="공면가격" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="4" onkeyup="inputNumberFormat(this);" autocomplete='off' dir="rtl" value="{{ 매물.공면가격 }}">
+                      <span class="input-group-text">만원/m<sup>2</sup></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="전용면적" class="form-label">전용면적</label>
+                    <div class="input-group">
+                      <input class="form-control" id="전용면적" name="전용면적" required autocomplete='off' dir="rtl" value="{{ 매물.전용면적 }}">
+                      <span class="input-group-text">평</span>
+                    </div class="input-group">
+                </div>
+                <div class="col-md-3">
+                    <label for="전면가격" class="form-label">m<sup>2</sup>당 가격</label>
+                    <div class="input-group">
+                      <input class="form-control" id="전면가격" name="전면가격" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="4" onkeyup="inputNumberFormat(this);" autocomplete='off' dir="rtl" value="{{ 매물.전면가격 }}">
+                      <span class="input-group-text">만원/m<sup>2</sup></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="방향" class="form-label">방향</label>
+                    <input class="form-control" id="방향" name="방향" autocomplete='off' value="{{ 매물.방향 }}">
+                </div>
+                <div class="col-md-3">
+                    <label for="해당층" class="form-label">해당층</label>
+                    <div class="input-group">
+                      <input class="form-control" id="해당층" name="해당층" required autocomplete='off' dir="rtl" value="{{ 매물.해당층 }}">
+                      <span class="input-group-text">층</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="전체층" class="form-label">전체층</label>
+                   <div class="input-group">
+                      <input class="form-control" id="전체층" name="전체층" required autocomplete='off' dir="rtl" value="{{ 매물.전체층 }}">
+                      <span class="input-group-text">층</span>
+                   </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="난방" class="form-label">난방</label>
+                    <input class="form-control" id="난방" name="난방" autocomplete='off' value="{{ 매물.난방 }}">
+                </div>
+                <div class="col-md-3">
+                    <label for="주차" class="form-label">주차</label>
+                    <input class="form-control" id="주차" name="주차" autocomplete='off' value="{{ 매물.주차 }}">
+                </div>
+                <div class="col-md-3">
+                    <label for="주차비" class="form-label">관리비</label>
+                    <div class="input-group">
+                      <input class="form-control" id="주차비" name="주차비" maxlength="4" autocomplete='off' dir="rtl" value="{{ 매물.주차비 }}">
+                      <span class="input-group-text">만원</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="입주일" class="form-label">입주일</label>
+                    <input type="date" class="form-control" id="입주일" name="입주일" autocomplete='off' min="2022-01-01" value="{{ 매물.입주일 }}">
+                </div>
+                <div class="col-md-3">
+                    <label for="사용승인일" class="form-label">사용승인일</label>
+                    <input type="date" class="form-control" id="사용승인일" name="사용승인일" autocomplete='off' min="2022-01-01" value="{{ 매물.사용승인일 }}">
+                </div>
+                <div class="col-md-6">
+                  <label for="주소" class="form-label">네이버 매물 주소</label>
+                  <div class="input-group">
+                    <span class="input-group-text">https://</span>
+                    <input class="form-control" id="주소" name="주소" autocomplete='off' value="{{ 매물.네이버주소 }}">
+                  </div>
+              </div>
+                <div class="row mt-3">
+                  <div class="col">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="추천" value="true" id="추천" {% if 매물.추천 %}checked{% endif %}>
+                      <label class="form-check-label" for="추천">추천</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="인기" value="true" id="인기" {% if 매물.인기 %}checked{% endif %}>
+                      <label class="form-check-label" for="인기">인기</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="강력추천" value="true" id="강력추천" {% if 매물.강력추천 %}checked{% endif %}>
+                      <label class="form-check-label" for="강력추천">강력추천</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="신축" value="true" id="신축" {% if 매물.신축 %}checked{% endif %}>
+                      <label class="form-check-label" for="신축">신축</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="즉시입주" value="true" id="즉시입주" {% if 매물.즉시입주 %}checked{% endif %}>
+                      <label class="form-check-label" for="즉시입주">즉시입주</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="급매" value="true" id="급매" {% if 매물.급매 %}checked{% endif %}>
+                      <label class="form-check-label" for="급매">급매</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" value="true" id="저렴" {% if 매물.저렴 %}checked{% endif %}>
+                      <label class="form-check-label" for="저렴">저렴</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mt-2 ms-1">
+                  <label class="form-check-label mb-2 ps-0 mt-1">본문</label>
+                  <div class="col" id="editor">
+                    {{ 매물.내용|safe }}
+                  </div>
+                  <input type="hidden" name="content" id="content">
+                </div>
+
+                <div class="col-12">
+                  <button class="btn btn-primary" type="submit" id="upload_btn">업로드</button>
+                </div>
+              </form>
+        </div>
+    </div>
+    <!-- Blog End -->
+
+    <script>
+        // 거래 종류 select 요소에 대한 참조를 가져옵니다.
+        const tradeTypeSelect = document.getElementById('거래종류');
+        // price 라벨에 대한 참조를 가져옵니다.
+        const priceLabel = document.getElementById('가격');
+        const rentInput = document.getElementById('월세');
+        // select 요소의 변경사항을 감지하는 이벤트 리스너를 추가합니다.
+        tradeTypeSelect.addEventListener('change', function() {
+            // 만약 분양이 선택되었다면...
+            switch (this.value) {
+                case '분양':
+                    priceLabel.innerText = '분양가';
+                    rentInput.readOnly = true;
+                    rentInput.value = '';
+                    break;
+                case '매매':
+                    priceLabel.innerText = '매매가';
+                    rentInput.readOnly = true;
+                    rentInput.value = '';
+                    break;
+                case '월세':
+                    priceLabel.innerText = '보증금';
+                    rentInput.readOnly = false;
+                    break;
+                case '전세':
+                    priceLabel.innerText = '전세보증금';
+                    rentInput.readOnly = true;
+                    rentInput.value = '';
+                    break;    
+                case 'defalut':
+                    priceLabel.innerText = '가격';
+                    rentInput.readOnly = true;
+                    rentInput.value = '';
+                    break;    
+            }
+        });
+        </script>
+        <script type="text/javascript">
+          function comma(str) {
+              str = String(str);
+              return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+          }
+      
+          function uncomma(str) {
+              str = String(str);
+              return str.replace(/[^\d]+/g, '');
+          } 
+          
+          function inputNumberFormat(obj) {
+              obj.value = comma(uncomma(obj.value));
+          }
+          
+          function inputOnlyNumberFormat(obj) {
+              obj.value = onlynumber(uncomma(obj.value));
+          }
+          
+          function onlynumber(str) {
+            str = String(str);
+            return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1');
+        }
+      </script>
+      <script type="module">
+        import ko_KR from '{% static "mom/js/ko_KR.js" %}';
+        import { Uppy, Dashboard, XHRUpload, Form } from "https://releases.transloadit.com/uppy/v3.23.0/uppy.min.mjs"
+        const csrfToken = "{{ csrf_token }}";
+        const updateEndpoint = "{% url 'sell_update' 매물.id %}";
+        const uppy = new Uppy({
+            autoProceed: false,
+            locale: ko_KR,
+        });
+        uppy.use(Dashboard, { 
+            target: '#uppy', 
+            inline: true, 
+            width: 1000, 
+            hideUploadButton : true,
+            hideProgressAfterFinish : true,
+            proudlyDisplayPoweredByUppy : false,
+            sortable: true,
+        })
+
+        uppy.use(XHRUpload, {
+            endpoint: updateEndpoint,
+            fieldName: 'files',  // 여러 파일을 받을 필드 이름
+            formData: true,
+            bundle: true,
+            headers: {
+              'X-CSRFToken': csrfToken,
+            },
+          });
+
+        uppy.use(Form, {
+        target: '#myForm',
+        getMetaFromForm: true,
+        addResultToForm: false,
+        submitOnSuccess: false,
+        })
+        document.addEventListener('DOMContentLoaded', (event) => {
+              // 서버로부터 받은 이미지 URL 목록
+          var imageUrls = {{ image_urls|safe }};
+
+          imageUrls.forEach(function(url) {
+              fetch(url).then(function(response) {
+                  return response.blob();
+              }).then(function(blob) {
+                  // 파일 객체 생성
+                  const file = new File([blob], url.split('/').pop());
+                  // Uppy 대시보드에 파일 추가
+                  uppy.addFile({
+                      name: file.name,
+                      type: file.type,
+                      data: file,
+                      source: 'Local',
+                      isRemote: false
+                  });
+              });
+          });
+
+          document.getElementById('upload_btn').addEventListener('click', function (e) {
+              e.preventDefault()
+              document.getElementById('content').value = quill.root.innerHTML;
+              uppy.upload().then((result) => {
+                if (result.successful.length > 0) { // 이미지가 있으면
+                  // 성공적으로 파일 업로드 후 폼 새로고침
+                  location.href = '/detail/{{ 매물.id }}';
+                  alert('수정 완료!')
+                } else {
+                  // 이미지가 없으면
+                  // 실패 처리
+                  alert('이미지를 등록해 주세요');
+                }
+              })
+            })
+        });
+      </script>
+      <!-- Include the Quill library -->
+      <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.4/dist/quill.js"></script>
+
+      <!-- Initialize Quill editor -->
+      <script>
+        var Font = Quill.import('formats/font');
+        // 사용자 정의 폰트를 whitelist에 추가
+        Font.whitelist = ['jal-go', 'serif', 'monospace'];
+        Quill.register(Font, true); 
+
+        var quill = new Quill('#editor', {
+          theme: 'snow',
+          modules: {
+            toolbar: {
+              container: [
+                [{ 'size': ['small', false, 'large', 'huge'] }], 
+                [{ 'font': ['jal-go', 'serif', 'monospace'] }],
+                [{ 'color': [] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                [{'align': []}],
+                [{'list': 'ordered'}, {'list': 'bullet'}],
+                ['link', 'image', 'video'], // 'link' for URL insertion, 'image' for image insertion, 'video' for video insertion
+                
+                ['clean'],
+              ],
+              handlers: {
+                'video': videoHandler
+              }
+            }
+          }
+        });
+
+        quill.format('align', 'center', Quill.sources.USER);
+        
+        // 비디오 버튼 핸들러
+        function videoHandler() {
+          var range = this.quill.getSelection();
+          var value = prompt('YouTube 영상 주소를 입력해주세요');
+          
+          if(value){
+              // YouTube URL에서 video ID를 추출하는 정규식
+              var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+              var match = value.match(regExp);
+              
+              if (match && match[2].length == 11) {
+                  // 유튜브 비디오 ID를 사용하여 iframe 형태의 비디오 URL 생성
+                  var iframeLink = 'https://www.youtube.com/embed/' + match[2];
+                  // Quill 에디터에 iframe 삽입
+                  this.quill.editor.insertEmbed(range.index, 'video', iframeLink);
+              } else {
+                  alert('URL이 유효하지 않습니다.');
+              }
+          }
+          
+        }
+      </script>
+{% endblock body %}
+

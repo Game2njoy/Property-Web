@@ -1,0 +1,139 @@
+{% extends 'mom/base.html' %}
+{% load static %}
+{% block body %}
+
+
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header wow fadeIn jal-go" data-wow-delay="0.1s">
+        <div class="container mb-5">
+            <h1 class="display-3 mb-3 animated slideInDown jal-go">오피스텔</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a class="text-body" href="#">전체 매물</a></li>
+                    <li class="breadcrumb-item text-dark active"><a class="text-body" href="{% url "officetel" %}">오피스텔</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+    <!-- Blog Start -->
+  <div class="container-xxl py-6 jal-go">
+        <div class="container">
+            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <h1 class="display-5 mb-3 jal-go">오피스텔 매물</h1>
+            </div>
+            <div class="row g-4">
+
+              <div id="loading" class="jal-go text-center" style="display: none;">
+                <p>매물 불러오는 중...</p>
+              </div>    
+        </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    let page = 2; // 첫 페이지로 시작
+    let isLoading = false;
+    let hasMoreData = true;
+
+    // 사용자의 기기가 모바일인지 확인하는 함수
+    function isMobileDevice() {
+      return /Mobi/.test(navigator.userAgent);
+    }
+  
+  // 모바일 기기일 경우 더 작은 임계값을, 그렇지 않을 경우 더 큰 임계값을 사용
+    const scrollThreshold = isMobileDevice() ? 800 : 300;
+
+    const loadMoreData = () => {
+        if (isLoading || !hasMoreData) {
+            return;
+        }
+
+        isLoading = true;
+        document.getElementById('loading').style.display = 'block';
+
+        fetch(`/officetel?page=${page}`, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            // 마지막 페이지 체크, 데이터가 비어있거나 is_last_page가 true일 경우
+            if (!data.properties.length || data.is_last_page) {
+                hasMoreData = false; // 더 이상 로드할 데이터가 없음
+            }
+
+            // 반환된 데이터가 있을 경우 DOM에 추가
+            if (data.properties.length) {
+                data.properties.forEach(property => {
+                    const element = document.createElement('div');
+                    element.className = "col-xl-3 col-lg-3 col-md-6 col-6 wow fadeInUp";
+                    element.setAttribute("data-wow-delay", "0.1s");
+                    element.innerHTML = `
+                    <div class="product-item">
+                      <div class="position-relative bg-light overflow-hidden"> 
+                          <img class="img-fluid w-100 m_img" src="{{MEDIA_URL}}${property.first_image_url}" alt="" style="object-fit: fill; ">
+                          <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
+                              ${property.인기 ? '<div class="badge bg-secondary rounded text-white py-1 px-1 ms-1" style="font-size: 10px;">인기</div>' : ''}
+                              ${property.신축 ? '<div class="badge bg-primary rounded text-white py-1 px-1 ms-1" style="font-size: 10px;">신축</div>' : ''}
+                              ${property.급매 ? '<div class="badge bg-success rounded text-white py-1 px-1 ms-1" style="font-size: 10px;">급매</div>' : ''}
+                              ${property.저렴 ? '<div class="badge bg-warning rounded text-white py-1 px-1 ms-1" style="font-size: 10px;">저렴</div>' : ''}
+                              ${property.추천 ? '<div class="badge bg-body rounded text-white py-1 px-1 ms-1" style="font-size: 10px;" id="green">추천</div>' : ''}
+                              ${property.강력추천 ? '<div class="badge bg-danger rounded text-white py-1 px-1 ms-1" style="font-size: 10px;">강력추천</div>' : ''}
+                              ${property.즉시입주 ? '<div class="badge bg-info rounded text-white py-1 px-1 ms-1" style="font-size: 10px;">즉시입주</div>' : ''}
+                          </div>
+                      </div>
+                      <div class="text-center px-4 pt-4 pb-3">
+                          <a class="d-block h5 mb-2 jal-go" href="/detail/${property.id}"><span class="text-primary">${property.거래종류}</span>
+                              ${property.매매가억 ? `<span> ${property.매매가억}억</span>` : ''}
+                              ${property.매매가}${property.거래종류 == '월세' ? `<span>/${property.월세}</span>` : ''}</a>
+                          <small class="d-block fs-6" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${property.제목}</small>
+                      </div>
+                      <div class="border-top text-center pb-1 pt-1">
+                          <small class="py-2">
+                              ${property.지역}
+                          </small>
+                      </div>
+                      <div class="d-flex border-top">
+                          <small class="w-50 text-center border-end py-2">
+                              전용 ${property.전면치환}m<sup>2</sup>
+                          </small>
+                          <small class="w-50 text-center py-2">
+                              ${property.해당층} / ${property.전체층} 층
+                          </small>
+                      </div>
+                  </div>
+                `;
+                    document.querySelector('.row.g-4').appendChild(element);
+                });
+
+                page++; // 다음 페이지 번호 증가
+            }
+
+            isLoading = false;
+            document.getElementById('loading').style.display = 'none';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            isLoading = false;
+            document.getElementById('loading').style.display = 'none';
+        });
+    };
+
+    const handleScroll = () => {
+        const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+        if (scrollTop + clientHeight > scrollHeight - scrollThreshold && !isLoading && hasMoreData) {
+            loadMoreData();
+        }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+});
+  </script>
+{% endblock body %}
+
