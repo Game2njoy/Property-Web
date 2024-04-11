@@ -26,6 +26,10 @@
     .fs-6 {
         font-size: 15px !important;
     }
+
+    .col-lg-7 {
+        padding-left: 0px;
+    }
     
 }
 
