@@ -584,3 +584,6 @@ def search(request):
 
     return render(request, "mom/search.html", context)
 
+def page_not_found(request, exception):
+    return render(request, 'mom/404error.html', {})
+
