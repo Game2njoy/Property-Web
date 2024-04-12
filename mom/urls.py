@@ -23,7 +23,7 @@ urlpatterns = [
     path('delete_property/', views.delete_property, name='delete_property'),
     path('search/', views.search, name='search'),
     path('sell_update/<int:id>/', views.sell_update, name='sell_update'),
-    path('robots.txt/', TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),
+    path('robots.txt/', TemplateView.as_view(template_name="mom/robots.txt", content_type='text/plain')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
