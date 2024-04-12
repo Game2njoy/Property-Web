@@ -3,7 +3,7 @@ from django.contrib.auth import views as auth_views
 from . import views
 from django.conf.urls.static import static
 from django.conf import settings
-from django.views.generic import TemplateView
+
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -23,7 +23,6 @@ urlpatterns = [
     path('delete_property/', views.delete_property, name='delete_property'),
     path('search/', views.search, name='search'),
     path('sell_update/<int:id>/', views.sell_update, name='sell_update'),
-    path('robots.txt/', TemplateView.as_view(template_name="mom/robots.txt", content_type='text/plain')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
