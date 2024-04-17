@@ -84,7 +84,15 @@
                     <div class="col-12 p-3 border-bottom border-dark">
                       <div class="row">
                         <div class="col-6 column_label">
+                          {% if 매물.거래종류 == '분양' %}
                           분양가
+                          {% elif 매물.거래종류 == '매매' %}
+                          매매가
+                          {% elif 매물.거래종류 == '월세' %}
+                          보증금
+                          {% elif 매물.거래종류 == '전세' %}
+                          전세보증금
+                          {% endif %}
                         </div>
                         <div class="col-6">
                         {% if 매물.매매가억 %}
