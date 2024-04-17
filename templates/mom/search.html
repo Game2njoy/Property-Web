@@ -7,11 +7,19 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header wow fadeIn jal-go" data-wow-delay="0.1s">
         <div class="container mb-5">
-            <h1 class="display-3 mb-3 animated slideInDown jal-go">검색 결과</h1>
+            <h1 class="display-3 mb-3 animated slideInDown jal-go">{% if not 검색어 %}전체 매물{% else %}검색 결과{% endif %}</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb mb-0">
+                    {% if not 검색어 %}
+                    <li class="breadcrumb-item"><a class="text-body" href="{% url "all_jisan" %}">지산</a></li>
+                    <li class="breadcrumb-item"><a class="text-body" href="#">아파트</a></li>
+                    <li class="breadcrumb-item"><a class="text-body" href="#">오피스텔</a></li>
+                    <li class="breadcrumb-item"><a class="text-body" href="#">상가</a></li>
+                    <li class="breadcrumb-item"><a class="text-body" href="#">사무실</a></a></li>
+                    {% else %}
                     <li class="breadcrumb-item"><a class="text-body" href="#">전체 매물</a></li>
-                    <li class="breadcrumb-item text-dark active"><a class="text-body">{% if not 검색어 %}전체 검색 결과{% else %}{{ 검색어 }}{% endif %}</a></li>
+                    <li class="breadcrumb-item text-dark active"><a class="text-body">{{ 검색어 }}</a></li>
+                    {% endif %}
                 </ol>
             </nav>
         </div>
@@ -23,7 +31,7 @@
   <div class="container-xxl py-6 jal-go">
         <div class="container">
             <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 700px;">
-                <h1 class="display-5 mb-3 jal-go">{% if not 검색어 %}전체 검색 결과{% else %}"{{ 검색어 }}" 검색 결과{% endif %}</h1>
+                <h1 class="display-5 mb-3 jal-go">{% if not 검색어 %}전체 매물{% else %}"{{ 검색어 }}" 검색 결과{% endif %}</h1>
             </div>
             <div class="row g-4">
  
@@ -77,7 +85,7 @@
                     element.innerHTML = `
                     <div class="product-item">
                       <div class="position-relative bg-light overflow-hidden"> 
-                          <img class="img-fluid w-100 m_img" src="{{MEDIA_URL}}${property.first_image_url}" alt="" style=" object-fit: fill; ">
+                        <a href="/detail/${property.id}"><img class="img-fluid w-100 m_img" src="{{MEDIA_URL}}${property.first_image_url}" alt="" style=" object-fit: fill; "></a>
                           <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
                               ${property.인기 ? '<div class="badge bg-secondary rounded text-white py-1 px-1 ms-1" style="font-size: 10px;">인기</div>' : ''}
                               ${property.신축 ? '<div class="badge bg-primary rounded text-white py-1 px-1 ms-1" style="font-size: 10px;">신축</div>' : ''}

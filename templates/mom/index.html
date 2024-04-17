@@ -180,7 +180,7 @@
                         <div class="col-xl-3 col-lg-3 col-md-6 col-6">
                             <div class="product-item">
                                 <div class="position-relative bg-light overflow-hidden"> 
-                                    <img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ jisan.first_image_url }}" alt="" style="object-fit: fill;">
+                                    <a href="{% url "detail" jisan.id %}"><img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ jisan.first_image_url }}" alt="" style="object-fit: fill;"></a>
                                     <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
                                         <div class="badge bg-body text-white py-1 ms-1" style="font-size: 10px; color: red;">New</div>
                                         {% if jisan.인기 %}
@@ -242,7 +242,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-6">
                             <div class="product-item">
                                 <div class="position-relative bg-light overflow-hidden"> 
-                                    <img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ apart.first_image_url }}" alt="" style=" object-fit: fill; ">
+                                    <a href="{% url "detail" apart.id %}"><img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ apart.first_image_url }}" alt="" style=" object-fit: fill; "></a>
                                     <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
                                         <div class="badge bg-body text-white py-1 ms-1" style="font-size: 10px; color: red;">New</div>
                                         {% if apart.인기 %}
@@ -304,7 +304,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-6">
                             <div class="product-item">
                                 <div class="position-relative bg-light overflow-hidden"> 
-                                    <img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ officetel.first_image_url }}" alt="" style="object-fit: fill; ">
+                                    <a href="{% url "detail" officetel.id %}"><img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ officetel.first_image_url }}" alt="" style="object-fit: fill; "></a>
                                     <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
                                         <div class="badge bg-body text-white py-1 ms-1" style="font-size: 10px; color: red;">New</div>
                                         {% if officetel.인기 %}
@@ -366,7 +366,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-6">
                             <div class="product-item">
                                 <div class="position-relative bg-light overflow-hidden"> 
-                                    <img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ sanga.first_image_url }}" alt="" style="object-fit: fill; ">
+                                    <a href="{% url "detail" sanga.id %}"><img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ sanga.first_image_url }}" alt="" style="object-fit: fill; "></a>
                                     <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
                                         <div class="badge bg-body text-white py-1 ms-1" style="font-size: 10px; color: red;">New</div>
                                         {% if sanga.인기 %}
@@ -428,7 +428,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-6" data-wow-delay="0.1s">
                             <div class="product-item">
                                 <div class="position-relative bg-light overflow-hidden"> 
-                                    <img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ office.first_image_url }}" alt="" style="object-fit: fill; ">
+                                    <a href="{% url "detail" office.id %}"><img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ office.first_image_url }}" alt="" style="object-fit: fill; "></a>
                                     <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
                                         <div class="badge bg-body text-white py-1 ms-1" style="font-size: 10px; color: red;">New</div>
                                         {% if office.인기 %}
@@ -490,7 +490,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-6 wow fadeInUp" data-wow-delay="0.1s">
                             <div class="product-item">
                                 <div class="position-relative bg-light overflow-hidden"> 
-                                    <img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ multi.first_image_url }}" alt="" style="object-fit: fill; ">
+                                    <a href="{% url "detail" multi.id %}"><img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ multi.first_image_url }}" alt="" style="object-fit: fill; "></a>
                                     <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
                                         <div class="badge bg-body text-white py-1 ms-1" style="font-size: 10px; color: red;">New</div>
                                         {% if multi.인기 %}
@@ -552,7 +552,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-6" data-wow-delay="0.1s">
                             <div class="product-item">
                                 <div class="position-relative bg-light overflow-hidden"> 
-                                    <img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ store.first_image_url }}" alt="" style="object-fit: fill; ">
+                                    <a href="{% url "detail" store.id %}"><img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ store.first_image_url }}" alt="" style="object-fit: fill; "></a>
                                     <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
                                         <div class="badge bg-body text-white py-1 ms-1" style="font-size: 10px; color: red;">New</div>
                                         {% if store.인기 %}

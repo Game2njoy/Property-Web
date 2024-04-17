@@ -157,6 +157,38 @@ def detail(request, id):
 
     return render(request, "mom/detail.html", context)
 
+def all_jisan(request):
+    items_per_page = 8 # 한 페이지에 보여줄 아이템의 수
+    page = request.GET.get('page', 1) # 현재 페이지 번호를 쿼리 파라미터에서 가져오거나, 없으면 1로 설정
+    # 썸네일 서브쿼리
+    # OuterRef를 사용하여 외부 쿼리(Property)의 기본 키(pk)를 참조
+    thumbnail = ImageGroup.objects.filter(property=OuterRef('pk')).order_by('created_at').values('이미지')[:1] # annotate로 붙이기 위해 값만 가져온다.
+    
+    # Property 쿼리셋에 첫 번째 이미지 URL을 annotate
+    지산 = Property.objects.filter(매물종류__contains="지식산업센터").annotate(first_image_url=Subquery(thumbnail)).order_by('-업로드_시간')
+
+    # Paginator를 사용하여 페이지네이션 설정
+    paginator = Paginator(지산, items_per_page)
+    try:
+        지산 = paginator.page(page) # 요청된 페이지에 해당하는 매물을 가져옴
+        is_last_page = 지산.has_next() is False # 다음 페이지가 없으면 마지막 페이지임
+    except PageNotAnInteger:
+        지산 = paginator.page(1) # 페이지 번호가 정수가 아니면 첫 페이지를 로드
+        is_last_page = False
+    except EmptyPage: # 요청된 페이지 번호가 범위를 벗어나면 마지막 페이지 로드
+        지산 = paginator.page(paginator.num_pages)
+        is_last_page = True
+
+    if request.headers.get("x-requested-with") == "XMLHttpRequest":
+        properties_list = list(지산.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전면치환', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
+        return JsonResponse({"properties": properties_list, "is_last_page": is_last_page}, safe=False)
+
+    context = {
+        "지산": 지산
+    }
+
+    return render(request, "mom/m_alljisan.html", context)
+
 def jisan(request):
     items_per_page = 8 # 한 페이지에 보여줄 아이템의 수
     page = request.GET.get('page', 1) # 현재 페이지 번호를 쿼리 파라미터에서 가져오거나, 없으면 1로 설정

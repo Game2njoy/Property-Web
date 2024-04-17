@@ -7,11 +7,13 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header wow fadeIn jal-go" data-wow-delay="0.1s">
         <div class="container mb-5">
-            <h1 class="display-3 mb-3 animated slideInDown jal-go">상가</h1>
+            <h1 class="display-3 mb-3 animated slideInDown jal-go">지식산업센터</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a class="text-body" href="#">전체 매물</a></li>
-                    <li class="breadcrumb-item text-dark active"><a class="text-body" href="{% url "sanga" %}">상가</a></li>
+                    <li class="breadcrumb-item"><a class="text-body" href="{% url "search" %}">전체 매물</a></li>
+                    <li class="breadcrumb-item text-dark active"><a class="text-body" href="{% url "multi" %}">덕은</a></li>
+                    <li class="breadcrumb-item text-dark active"><a class="text-body" href="{% url "store" %}">향동</a></li>
+                    <li class="breadcrumb-item text-dark active"><a class="text-body" href="{% url "jisan" %}">기타</a></li>
                 </ol>
             </nav>
         </div>
@@ -22,11 +24,11 @@
     <!-- Blog Start -->
   <div class="container-xxl py-6 jal-go">
         <div class="container">
-            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <h1 class="display-5 mb-3 jal-go">상가 매물</h1>
+            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                <h1 class="display-5 mb-3 jal-go">지식산업센터 매물</h1>
             </div>
             <div class="row g-4">
-                
+
               <div id="loading" class="jal-go text-center" style="display: none;">
                 <p>매물 불러오는 중...</p>
               </div>    
@@ -55,7 +57,7 @@
         isLoading = true;
         document.getElementById('loading').style.display = 'block';
 
-        fetch(`/sanga?page=${page}`, {
+        fetch(`/jisan?page=${page}`, {
             method: 'GET',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
