@@ -319,6 +319,10 @@
         const uppy = new Uppy({
             autoProceed: false,
             locale: ko_KR,
+            restrictions: {
+              maxFileSize: 3000000, // 최대 파일 크기 제한 (예: 3MB)
+              allowedFileTypes: ['image/*'] // 허용되는 파일 유형
+            },
         });
         uppy.use(Dashboard, { 
             target: '#uppy', 
