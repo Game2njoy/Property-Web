@@ -12,12 +12,12 @@
                 <ol class="breadcrumb mb-0">
                     {% if not 검색어 %}
                     <li class="breadcrumb-item"><a class="text-body" href="{% url "all_jisan" %}">지산</a></li>
-                    <li class="breadcrumb-item"><a class="text-body" href="#">아파트</a></li>
-                    <li class="breadcrumb-item"><a class="text-body" href="#">오피스텔</a></li>
-                    <li class="breadcrumb-item"><a class="text-body" href="#">상가</a></li>
-                    <li class="breadcrumb-item"><a class="text-body" href="#">사무실</a></a></li>
+                    <li class="breadcrumb-item"><a class="text-body" href="{% url "apart" %}">아파트</a></li>
+                    <li class="breadcrumb-item"><a class="text-body" href="{% url "officetel" %}">오피스텔</a></li>
+                    <li class="breadcrumb-item"><a class="text-body" href="{% url "sanga" %}">상가</a></li>
+                    <li class="breadcrumb-item"><a class="text-body" href="{% url "office" %}">사무실</a></a></li>
                     {% else %}
-                    <li class="breadcrumb-item"><a class="text-body" href="#">전체 매물</a></li>
+                    <li class="breadcrumb-item"><a class="text-body" href="{% url "search" %}">전체 매물</a></li>
                     <li class="breadcrumb-item text-dark active"><a class="text-body">{{ 검색어 }}</a></li>
                     {% endif %}
                 </ol>
