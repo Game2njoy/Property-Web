@@ -582,6 +582,7 @@ def search(request):
     
     query = request.GET.get('search','')
 
+
     if query:
         # Q 객체를 사용하여 OR 조건으로 필터링합니다.
         q_objects = Q(매물종류__icontains=query) | Q(거래종류__icontains=query) | \
