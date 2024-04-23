@@ -126,7 +126,7 @@
                 <div class="col-md-3">
                     <label for="공면가격" class="form-label">m<sup>2</sup>당 가격</label>
                     <div class="input-group">
-                      <input class="form-control" id="공면가격" name="공면가격" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="4" onkeyup="inputNumberFormat(this);" autocomplete='off' dir="rtl">
+                      <input class="form-control" id="공면가격" name="공면가격" onInput="this.value=this.value.replace(/[^-\.0-9]/g,'');" maxlength="5" autocomplete='off' dir="rtl">
                       <span class="input-group-text">만원/m<sup>2</sup></span>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
                 <div class="col-md-3">
                     <label for="전면가격" class="form-label">m<sup>2</sup>당 가격</label>
                     <div class="input-group">
-                      <input class="form-control" id="전면가격" name="전면가격" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="4" onkeyup="inputNumberFormat(this);" autocomplete='off' dir="rtl">
+                      <input class="form-control" id="전면가격" name="전면가격" onInput="this.value=this.value.replace(/[^-\.0-9]/g,'');" maxlength="5" autocomplete='off' dir="rtl">
                       <span class="input-group-text">만원/m<sup>2</sup></span>
                     </div>
                 </div>

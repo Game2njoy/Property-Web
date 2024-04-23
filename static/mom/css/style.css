@@ -13,6 +13,13 @@
     font-style: normal;
 }
 
+/* 모든 브라우저에서 기본 증가/감소 화살표 제거 */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none; /* Chrome, Safari, Opera 등에서 */
+  margin: 0;
+}
+
 /* 기본 스타일: 768px 미만의 경우 */
 .m_img {
     height: 150px;
