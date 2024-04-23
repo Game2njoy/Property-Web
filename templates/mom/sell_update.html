@@ -95,7 +95,7 @@
                 <div class="col-md-4">
                   <label for="월세" class="form-label">월세</label>
                   <div class="input-group">
-                    <input class="form-control" id="월세" name="월세" {% if 매물.월세 %}value="{{ 매물.월세 }}" {% endif %}readonly required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="15" onkeyup="inputNumberFormat(this);" autocomplete='off' dir="rtl">
+                    <input class="form-control" id="월세" name="월세" {% if 매물.월세 %}value="{{ 매물.월세 }}" {% else %}readonly{% endif %} required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="15" onkeyup="inputNumberFormat(this);" autocomplete='off' dir="rtl">
                     <span class="input-group-text">만원</span>
                   </div>
                 </div>
