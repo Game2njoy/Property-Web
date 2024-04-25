@@ -103,13 +103,29 @@
                       </div>
                     </div>
 
+                    {% if 매물.거래종류 == '월세' %}
+                    <div class="col-12 p-3 border-bottom border-dark">
+                      <div class="row">
+                        <div class="col-6 column_label">
+                          월세 <span style="font-size: 11px;">(부가세 별도)</span>
+                        </div>
+                        <div class="col-6">
+                          {{ 매물.월세 }} 만원
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+
                     <div class="col-6 p-3 border-bottom border-dark">
                       <div class="row">
                         <div class="col-6 column_label">
                           공급면적
                         </div>
                         <div class="col-6">
-                          {{ 매물.공급면적 }} 평 / {{ 매물.공면치환 }}m<sup>2</sup>
+                          <span id="size">{{ 매물.공급면적 }} 평</span>
+                          <span class="ps-1" style="cursor: pointer;" id="swap_size" data-size="{{ 매물.공면치환 }}m<sup>2</sup>">
+                            <i class="bi bi-arrow-repeat"></i>
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -132,7 +148,10 @@
                           전용면적
                         </div>
                         <div class="col-6">
-                          {{ 매물.전용면적 }} 평 / {{ 매물.전면치환 }}m<sup>2</sup>
+                          <span id="size2">{{ 매물.전용면적 }} 평</span>
+                          <span class="ps-1" style="cursor: pointer;" id="swap_size2" data-size="{{ 매물.전면치환 }}m<sup>2</sup>">
+                            <i class="bi bi-arrow-repeat"></i>
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -270,7 +289,7 @@
 
                     <div class="col-12 p-3 border-bottom border-dark">
                       <div class="row border-dark">
-                        <div class="col-3 column_label">
+                        <div class="col-4 column_label">
                           네이버 주소
                         </div>
                         <div class="col-6 text-center">
@@ -348,6 +367,23 @@
         }
       }
       </script>
+    <script>
+      document.getElementById('swap_size').addEventListener('click' , (event) => {
+        const size = document.getElementById('size')
+        const size_btn = document.getElementById('swap_size')
+        const currentSize = size.innerHTML
+        size.innerHTML = size_btn.dataset.size;
+        size_btn.setAttribute('data-size', currentSize);
+      });
+
+      document.getElementById('swap_size2').addEventListener('click' , (event) => {
+        const size = document.getElementById('size2')
+        const size_btn = document.getElementById('swap_size2')
+        const currentSize = size.innerHTML
+        size.innerHTML = size_btn.dataset.size;
+        size_btn.setAttribute('data-size', currentSize);
+      });
+    </script>
 {% endblock body %}
 
 
