@@ -180,7 +180,7 @@ def all_jisan(request):
         is_last_page = True
 
     if request.headers.get("x-requested-with") == "XMLHttpRequest":
-        properties_list = list(지산.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전면치환', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
+        properties_list = list(지산.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전용면적', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
         return JsonResponse({"properties": properties_list, "is_last_page": is_last_page}, safe=False)
 
     context = {
@@ -212,7 +212,7 @@ def jisan(request):
         is_last_page = True
 
     if request.headers.get("x-requested-with") == "XMLHttpRequest":
-        properties_list = list(지산.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전면치환', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
+        properties_list = list(지산.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전용면적', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
         return JsonResponse({"properties": properties_list, "is_last_page": is_last_page}, safe=False)
 
     context = {
@@ -244,7 +244,7 @@ def apart(request):
         is_last_page = True
 
     if request.headers.get("x-requested-with") == "XMLHttpRequest":
-        properties_list = list(아파트.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전면치환', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
+        properties_list = list(아파트.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전용면적', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
         return JsonResponse({"properties": properties_list, "is_last_page": is_last_page}, safe=False)
 
     context = {
@@ -276,7 +276,7 @@ def officetel(request):
         is_last_page = True
 
     if request.headers.get("x-requested-with") == "XMLHttpRequest":
-        properties_list = list(오피스텔.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전면치환', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
+        properties_list = list(오피스텔.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전용면적', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
         return JsonResponse({"properties": properties_list, "is_last_page": is_last_page}, safe=False)
 
     context = {
@@ -308,7 +308,7 @@ def sanga(request):
         is_last_page = True
 
     if request.headers.get("x-requested-with") == "XMLHttpRequest":
-        properties_list = list(상가.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전면치환', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
+        properties_list = list(상가.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전용면적', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
         return JsonResponse({"properties": properties_list, "is_last_page": is_last_page}, safe=False)
 
     context = {
@@ -340,7 +340,7 @@ def office(request):
         is_last_page = True
 
     if request.headers.get("x-requested-with") == "XMLHttpRequest":
-        properties_list = list(오피스.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전면치환', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
+        properties_list = list(오피스.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전용면적', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
         return JsonResponse({"properties": properties_list, "is_last_page": is_last_page}, safe=False)
 
     context = {
@@ -372,7 +372,7 @@ def multi(request):
         is_last_page = True
 
     if request.headers.get("x-requested-with") == "XMLHttpRequest":
-        properties_list = list(다가구.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전면치환', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
+        properties_list = list(다가구.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전용면적', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
         return JsonResponse({"properties": properties_list, "is_last_page": is_last_page}, safe=False)
 
     context = {
@@ -404,7 +404,7 @@ def store(request):
         is_last_page = True
 
     if request.headers.get("x-requested-with") == "XMLHttpRequest":
-        properties_list = list(점포.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전면치환', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
+        properties_list = list(점포.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전용면적', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
         return JsonResponse({"properties": properties_list, "is_last_page": is_last_page}, safe=False)
 
     context = {
@@ -436,7 +436,7 @@ def land(request):
         is_last_page = True
 
     if request.headers.get("x-requested-with") == "XMLHttpRequest":
-        properties_list = list(토지.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전면치환', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
+        properties_list = list(토지.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전용면적', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
         return JsonResponse({"properties": properties_list, "is_last_page": is_last_page}, safe=False)
 
     context = {
@@ -607,7 +607,7 @@ def search(request):
         is_last_page = True
 
     if request.headers.get("x-requested-with") == "XMLHttpRequest":
-        properties_list = list(results.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전면치환', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
+        properties_list = list(results.object_list.values('id', '거래종류', 'first_image_url', '매매가억', '매매가', '월세', '지역', '제목', '전용면적', '해당층', '전체층', '추천', '강력추천', '인기', '신축', '즉시입주', '급매', '저렴'))
         return JsonResponse({"properties": properties_list, "is_last_page": is_last_page}, safe=False)
 
     context = {
