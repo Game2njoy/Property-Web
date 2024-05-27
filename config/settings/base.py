@@ -177,7 +177,7 @@ MEDIA_URL = '/media/images/'
 
 LOGIN_URL = '/'
 
-SESSION_COOKIE_AGE = 3600
+SESSION_COOKIE_AGE = 7200
 SESSION_SAVE_EVERY_REQUEST = True 
 
 # Static files (CSS, JavaScript, Images)
