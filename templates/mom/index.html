@@ -190,6 +190,7 @@
                         {% for jisan in 지산 %}
                         <div class="col-xl-3 col-lg-3 col-md-6 col-6">
                             <div class="product-item">
+                                <div class="border-bottom text-center pb-1 pt-1 text-dark">매물 번호 - {{jisan.id}}</div>
                                 <div class="position-relative bg-light overflow-hidden"> 
                                     <a href="{% url "detail" jisan.id %}"><img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ jisan.first_image_url }}" alt="" style="object-fit: fill;"></a>
                                     <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
@@ -217,7 +218,7 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                <div class="text-center px-4 pt-4 pb-3">
+                                <div class="text-center px-4 pt-4 pb-3 border-top">
                                     <a class="d-block h5 mb-2 jal-go" href="{% url "detail" jisan.id %}"><span class="text-primary">{{ jisan.거래종류 }}</span>
                                         {% if jisan.매매가억 %}<span> {{ jisan.매매가억 }}억</span>{% endif %}
                                          {{ jisan.매매가 }}{% if jisan.거래종류 == '월세' %}<span>/{{ jisan.월세 }}</span>{% endif %}</a>
@@ -252,6 +253,7 @@
                         {% for apart in 아파트 %}
                         <div class="col-xl-3 col-lg-4 col-md-6 col-6">
                             <div class="product-item">
+                                <div class="border-bottom text-center pb-1 pt-1 text-dark">매물 번호 - {{apart.id}}</div>
                                 <div class="position-relative bg-light overflow-hidden"> 
                                     <a href="{% url "detail" apart.id %}"><img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ apart.first_image_url }}" alt="" style=" object-fit: fill; "></a>
                                     <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
@@ -279,7 +281,7 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                <div class="text-center px-4 pt-4 pb-3">
+                                <div class="text-center px-4 pt-4 pb-3 border-top">
                                     <a class="d-block h5 mb-2 jal-go" href="{% url "detail" apart.id %}"><span class="text-primary">{{ apart.거래종류 }}</span>
                                         {% if apart.매매가억 %}<span> {{ apart.매매가억 }}억</span>{% endif %}
                                          {{ apart.매매가 }}{% if apart.거래종류 == '월세' %}<span>/{{ apart.월세 }}</span>{% endif %}</a>
@@ -314,6 +316,7 @@
                         {% for officetel in 오피스텔 %}
                         <div class="col-xl-3 col-lg-4 col-md-6 col-6">
                             <div class="product-item">
+                                <div class="border-bottom text-center pb-1 pt-1 text-dark">매물 번호 - {{officetel.id}}</div>
                                 <div class="position-relative bg-light overflow-hidden"> 
                                     <a href="{% url "detail" officetel.id %}"><img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ officetel.first_image_url }}" alt="" style="object-fit: fill; "></a>
                                     <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
@@ -341,7 +344,7 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                <div class="text-center px-4 pt-4 pb-3">
+                                <div class="text-center px-4 pt-4 pb-3 border-top">
                                     <a class="d-block h5 mb-2 jal-go" href="{% url "detail" officetel.id %}"><span class="text-primary">{{ officetel.거래종류 }}</span>
                                         {% if officetel.매매가억 %}<span> {{ officetel.매매가억 }}억</span>{% endif %}
                                          {{ officetel.매매가 }}{% if officetel.거래종류 == '월세' %}<span>/{{ officetel.월세 }}</span>{% endif %}</a>
@@ -376,6 +379,7 @@
                         {% for sanga in 상가 %}
                         <div class="col-xl-3 col-lg-4 col-md-6 col-6">
                             <div class="product-item">
+                                <div class="border-bottom text-center pb-1 pt-1 text-dark">매물 번호 - {{sanga.id}}</div>
                                 <div class="position-relative bg-light overflow-hidden"> 
                                     <a href="{% url "detail" sanga.id %}"><img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ sanga.first_image_url }}" alt="" style="object-fit: fill; "></a>
                                     <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
@@ -403,7 +407,7 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                <div class="text-center px-4 pt-4 pb-3">
+                                <div class="text-center px-4 pt-4 pb-3 border-top">
                                     <a class="d-block h5 mb-2 jal-go" href="{% url "detail" sanga.id %}"><span class="text-primary">{{ sanga.거래종류 }}</span>
                                         {% if sanga.매매가억 %}<span> {{ sanga.매매가억 }}억</span>{% endif %}
                                          {{ sanga.매매가 }}{% if sanga.거래종류 == '월세' %}<span>/{{ sanga.월세 }}</span>{% endif %}</a>
@@ -438,6 +442,7 @@
                         {% for office in 사무실 %}
                         <div class="col-xl-3 col-lg-4 col-md-6 col-6" data-wow-delay="0.1s">
                             <div class="product-item">
+                                <div class="border-bottom text-center pb-1 pt-1 text-dark">매물 번호 - {{office.id}}</div>
                                 <div class="position-relative bg-light overflow-hidden"> 
                                     <a href="{% url "detail" office.id %}"><img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ office.first_image_url }}" alt="" style="object-fit: fill; "></a>
                                     <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
@@ -465,7 +470,7 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                <div class="text-center px-4 pt-4 pb-3">
+                                <div class="text-center px-4 pt-4 pb-3 border-top">
                                     <a class="d-block h5 mb-2 jal-go" href="{% url "detail" office.id %}"><span class="text-primary">{{ office.거래종류 }}</span>
                                         {% if office.매매가억 %}<span> {{ office.매매가억 }}억</span>{% endif %}
                                          {{ office.매매가 }}{% if office.거래종류 == '월세' %}<span>/{{ office.월세 }}</span>{% endif %}</a>
@@ -500,6 +505,7 @@
                         {% for multi in 덕지산 %}
                         <div class="col-xl-3 col-lg-4 col-md-6 col-6 wow fadeInUp" data-wow-delay="0.1s">
                             <div class="product-item">
+                                <div class="border-bottom text-center pb-1 pt-1 text-dark">매물 번호 - {{multi.id}}</div>
                                 <div class="position-relative bg-light overflow-hidden"> 
                                     <a href="{% url "detail" multi.id %}"><img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ multi.first_image_url }}" alt="" style="object-fit: fill; "></a>
                                     <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
@@ -527,7 +533,7 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                <div class="text-center px-4 pt-4 pb-3">
+                                <div class="text-center px-4 pt-4 pb-3 border-top">
                                     <a class="d-block h5 mb-2 jal-go" href="{% url "detail" multi.id %}"><span class="text-primary">{{ multi.거래종류 }}</span>
                                         {% if multi.매매가억 %}<span> {{ multi.매매가억 }}억</span>{% endif %}
                                          {{ multi.매매가 }}{% if multi.거래종류 == '월세' %}<span>/{{ multi.월세 }}</span>{% endif %}</a>
@@ -562,6 +568,7 @@
                         {% for store in 향지산 %}
                         <div class="col-xl-3 col-lg-4 col-md-6 col-6" data-wow-delay="0.1s">
                             <div class="product-item">
+                                <div class="border-bottom text-center pb-1 pt-1 text-dark">매물 번호 - {{store.id}}</div>
                                 <div class="position-relative bg-light overflow-hidden"> 
                                     <a href="{% url "detail" store.id %}"><img class="img-fluid w-100 m_img" src="{{ MEDIA_URL }}{{ store.first_image_url }}" alt="" style="object-fit: fill; "></a>
                                     <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
@@ -589,7 +596,7 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                <div class="text-center px-4 pt-4 pb-3">
+                                <div class="text-center px-4 pt-4 pb-3 border-top">
                                     <a class="d-block h5 mb-2 jal-go" href="{% url "detail" store.id %}"><span class="text-primary">{{ store.거래종류 }}</span>
                                         {% if store.매매가억 %}<span> {{ store.매매가억 }}억</span>{% endif %}
                                          {{ store.매매가 }}{% if store.거래종류 == '월세' %}<span>/{{ store.월세 }}</span>{% endif %}</a>

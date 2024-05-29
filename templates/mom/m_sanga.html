@@ -87,6 +87,7 @@
                     element.setAttribute("data-wow-delay", "0.1s");
                     element.innerHTML = `
                     <div class="product-item">
+                    <div class="border-bottom text-center pb-1 pt-1 text-dark">매물 번호 - ${property.id}</div>
                       <div class="position-relative bg-light overflow-hidden"> 
                         <a href="/detail/${property.id}"><img class="img-fluid w-100 m_img" src="{{MEDIA_URL}}${property.first_image_url}" alt="" style="object-fit: fill; "></a>
                           <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
@@ -99,7 +100,7 @@
                               ${property.즉시입주 ? '<div class="badge bg-info rounded text-white py-1 px-1 ms-1" style="font-size: 10px;">즉시입주</div>' : ''}
                           </div>
                       </div>
-                      <div class="text-center px-4 pt-4 pb-3">
+                      <div class="text-center px-4 pt-4 pb-3 border-top">
                           <a class="d-block h5 mb-2 jal-go" href="/detail/${property.id}"><span class="text-primary">${property.거래종류}</span>
                               ${property.매매가억 ? `<span> ${property.매매가억}억</span>` : ''}
                               ${property.매매가}${property.거래종류 == '월세' ? `<span>/${property.월세}</span>` : ''}</a>
