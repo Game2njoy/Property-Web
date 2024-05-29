@@ -580,17 +580,28 @@ def search(request):
     # OuterRef를 사용하여 외부 쿼리(Property)의 기본 키(pk)를 참조
     thumbnail = ImageGroup.objects.filter(property=OuterRef('pk')).order_by('created_at').values('이미지')[:1] # annotate로 붙이기 위해 값만 가져온다.
     
+    # 'search' 키가 존재하지 않을 경우 공백 문자열을 반환
     query = request.GET.get('search','')
 
 
-    if query:
+    if '매물번호' in query:
+        try:
+            # '매물번호' 뒤의 숫자 추출
+            number = int(query.split('매물번호 ')[-1].strip())
+            # 해당 매물번호로 필터링
+            results = Property.objects.filter(id=number).annotate(first_image_url=Subquery(thumbnail)).order_by('-업로드_시간')
+        except ValueError:
+            # 쿼리문 공백으로 만들고 전체매물로 불러오기
+            query = ''
+            # 매물번호 뒤에 올바른 숫자가 없는 경우 예외 처리
+            results = Property.objects.all().annotate(first_image_url=Subquery(thumbnail)).order_by('-업로드_시간')
+    elif query and '매물번호' not in query:
         # Q 객체를 사용하여 OR 조건으로 필터링합니다.
         q_objects = Q(매물종류__icontains=query) | Q(거래종류__icontains=query) | \
                     Q(매매가억__icontains=query) | Q(테마__icontains=query) | Q(내용__icontains=query) | Q(매매가__icontains=query) | Q(제목__icontains=query) | Q(지역__icontains=query)
                     
         # 생성된 Q 객체로 쿼리셋을 필터링하고, .distinct()로 중복을 제거합니다.
         results = Property.objects.filter(q_objects).distinct().annotate(first_image_url=Subquery(thumbnail)).order_by('-업로드_시간')
-        
     else:
         results = Property.objects.all().annotate(first_image_url=Subquery(thumbnail)).order_by('-업로드_시간')  # 비어 있는 쿼리셋을 반환합니다.
 
