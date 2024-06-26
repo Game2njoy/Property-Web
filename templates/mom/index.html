@@ -9,7 +9,60 @@
         /* cover 이미지 비율을 유지하면서 컨테이너를 꽉 채움 */
 
     }
+    
+    #popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid #ccc;
+        background-color: #fff;
+        z-index: 1031;
+        width: 40%; /* 원하는 너비를 설정하세요 */
+        max-width: 1200px; /* 최대 너비를 설정하세요 */
+    }
+
+    .popup-img {
+        width: 100%; /* 기본적으로 이미지가 컨테이너 너비에 맞춰지도록 설정 */
+    }
+
+    @media (max-width: 600px) {
+        #popup{
+            width: 90%
+        }
+    }
+    @media (min-width: 601px) and (max-width: 900px) {
+        #popup{
+            width: 80%
+        }
+    }
+    .popup-header {
+
+    }
+
 </style>
+    <!-- 팝업창 -->
+    <div id="popup" class="jal-go container shadow" style="padding: 0px">
+        <div class="border-bottom text-center pt-2 pb-1 text-dark popup-header">알림</div>
+       <div class="pt-4 px-4 pb-3">
+            <div class="row">
+                <div class="col">
+                    <img src="{% static 'mom/img/popup.png' %}" class="popup-img" alt="팝업">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col d-flex justify-content-between align-items-center pt-3">
+                    <button id="close-btn" class="btn btn-primary btn-sm">닫기</button>
+                    <div class="form-check pt-2">
+                        <input type="checkbox" class="form-check-input" id="hide-for-day-checkbox">
+                        <label class="form-check-label" for="hide-for-day-checkbox" style="color: black; font-size: 15px;">하루 동안 보지 않기</label>
+                    </div>
+                </div>
+       </div>
+        </div>
+    </div>
+
     <!-- Carousel Start -->
     <div class="container-fluid p-0 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
@@ -811,4 +864,86 @@
         </div>
     </div>
     <!-- Blog End --> {% endcomment %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const popup = document.getElementById('popup');
+            const closeBtn = document.getElementById('close-btn');
+            const hideForDayCheckbox = document.getElementById('hide-for-day-checkbox');
+            const popupHeader = document.querySelector('.popup-header');
+            let isDragging = false;
+            let offsetX, offsetY;
+
+            function getCookie(name) {
+                let cookieArr = document.cookie.split(";");
+                for (let i = 0; i < cookieArr.length; i++) {
+                    let cookiePair = cookieArr[i].split("=");
+                    if (name == cookiePair[0].trim()) {
+                        return decodeURIComponent(cookiePair[1]);
+                    }
+                }
+                return null;
+            }
+
+            function setCookie(name, value, days) {
+                let date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                document.cookie = name + "=" + value + ";expires=" + date.toUTCString() + ";path=/";
+            }
+
+            function showPopup() {
+                popup.style.display = 'block';
+            }
+
+            function hidePopup() {
+                if (hideForDayCheckbox.checked) {
+                    setCookie('hidePopup', 'true', 1);
+                }
+                popup.style.display = 'none';
+            }
+
+            function centerPopup() {
+                popup.style.top = '50%';
+                popup.style.left = '50%';
+                popup.style.transform = 'translate(-50%, -50%)';
+            }
+
+            closeBtn.addEventListener('click', hidePopup);
+
+            if (!getCookie('hidePopup')) {
+                showPopup();
+            }
+
+            // 드래그 시작
+            popupHeader.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                offsetX = e.clientX - popup.getBoundingClientRect().left;
+                offsetY = e.clientY - popup.getBoundingClientRect().top;
+                document.addEventListener('mousemove', movePopup);
+                document.addEventListener('mouseup', stopDragging);
+            });
+
+            function movePopup(e) {
+                if (isDragging) {
+                    const x = e.clientX - offsetX;
+                    const y = e.clientY - offsetY;
+                    popup.style.left = `${x}px`;
+                    popup.style.top = `${y}px`;
+                    popup.style.transform = 'none'; // 이동 중에는 translate를 제거
+                }
+            }
+
+            function stopDragging() {
+                isDragging = false;
+                document.removeEventListener('mousemove', movePopup);
+                document.removeEventListener('mouseup', stopDragging);
+            }
+
+            window.addEventListener('resize', function() {
+                if (!isDragging) {
+                    centerPopup();
+                }
+            });
+        });
+    </script>
 {% endblock body %}
