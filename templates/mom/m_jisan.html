@@ -36,6 +36,25 @@
             <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                 <h1 class="display-5 mb-3 jal-go">기타 - 지식산업센터 매물</h1>
             </div>
+
+            <div class="container text-start mb-5 ps-4 border border-grey bg-white pt-1 text-dark wow fadeInUp position-relative rounded border-2 shadow" data-wow-delay="0.1s">
+                <div class="row position-absolute bg-white px-2" style="top: -11px; left: 25px;">필터</div>
+                <div class="row pt-4" style="padding-bottom: 8px">
+                    <div class="form-check col-auto">
+                        <input class="form-check-input" type="checkbox" value="매매" id="매매" onchange="redirectToView()">
+                        <label class="form-check-label" for="매매">
+                          매매
+                        </label>
+                      </div>
+                    <div class="form-check col-auto">
+                        <input class="form-check-input" type="checkbox" value="월세" id="월세" onchange="redirectToView()">
+                        <label class="form-check-label" for="월세">
+                          월세
+                        </label>
+                      </div>
+                </div>
+            </div>
+
             <div class="row g-4">
 
               <div id="loading" class="jal-go text-center" style="display: none;">
@@ -66,7 +85,11 @@
         isLoading = true;
         document.getElementById('loading').style.display = 'block';
 
-        fetch(`/jisan?page=${page}`, {
+        const urlParams = new URLSearchParams(window.location.search);
+        const 매매 = urlParams.has('매매') ? '1' : '';
+        const 월세 = urlParams.has('월세') ? '1' : '';
+
+        fetch(`/jisan?page=${page}&매매=${매매}&월세=${월세}`, {
             method: 'GET',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
@@ -147,5 +170,37 @@
     window.addEventListener('scroll', handleScroll);
 });
   </script>
+
+  <script>
+    function redirectToView() {
+        let 매매 = document.getElementById('매매').checked;
+        let 월세 = document.getElementById('월세').checked;
+        let url = new URL(window.location.href);
+    
+        if (매매) {
+            url.searchParams.set('매매', '1');
+        } else {
+            url.searchParams.delete('매매');
+        }
+    
+        if (월세) {
+            url.searchParams.set('월세', '1');
+        } else {
+            url.searchParams.delete('월세');
+        }
+    
+        window.location.href = url.toString();
+    }
+    
+    window.onload = function() {
+        let urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('매매')) {
+            document.getElementById('매매').checked = true;
+        }
+        if (urlParams.has('월세')) {
+            document.getElementById('월세').checked = true;
+        }
+    }
+    </script>
 {% endblock body %}
 

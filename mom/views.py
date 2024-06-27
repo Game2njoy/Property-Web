@@ -190,14 +190,26 @@ def all_jisan(request):
     return render(request, "mom/m_alljisan.html", context)
 
 def jisan(request):
+    매매 = request.GET.get('매매', None)
+    월세 = request.GET.get('월세', None)
+    filters = Q(매물종류="지식산업센터")
+
     items_per_page = 8 # 한 페이지에 보여줄 아이템의 수
     page = request.GET.get('page', 1) # 현재 페이지 번호를 쿼리 파라미터에서 가져오거나, 없으면 1로 설정
     # 썸네일 서브쿼리
     # OuterRef를 사용하여 외부 쿼리(Property)의 기본 키(pk)를 참조
     thumbnail = ImageGroup.objects.filter(property=OuterRef('pk')).order_by('created_at').values('이미지')[:1] # annotate로 붙이기 위해 값만 가져온다.
     
+    # 거래종류 필터
+    if 매매 and 월세:
+        filters &= (Q(거래종류="매매") | Q(거래종류="월세"))
+    elif 매매:
+        filters &= Q(거래종류="매매")
+    elif 월세:
+        filters &= Q(거래종류="월세")
+
     # Property 쿼리셋에 첫 번째 이미지 URL을 annotate
-    지산 = Property.objects.filter(매물종류="지식산업센터").annotate(first_image_url=Subquery(thumbnail)).order_by('-업로드_시간')
+    지산 = Property.objects.filter(filters).annotate(first_image_url=Subquery(thumbnail)).order_by('-업로드_시간')
 
     # Paginator를 사용하여 페이지네이션 설정
     paginator = Paginator(지산, items_per_page)
@@ -350,14 +362,28 @@ def office(request):
     return render(request, "mom/m_office.html", context)
 
 def multi(request):
+    매매 = request.GET.get('매매', None)
+    월세 = request.GET.get('월세', None)
+    filters = Q(매물종류="덕지식산업센터")
+
+
     items_per_page = 8 # 한 페이지에 보여줄 아이템의 수
     page = request.GET.get('page', 1) # 현재 페이지 번호를 쿼리 파라미터에서 가져오거나, 없으면 1로 설정
     # 썸네일 서브쿼리
     # OuterRef를 사용하여 외부 쿼리(Property)의 기본 키(pk)를 참조
     thumbnail = ImageGroup.objects.filter(property=OuterRef('pk')).order_by('created_at').values('이미지')[:1] # annotate로 붙이기 위해 값만 가져온다.
     
+    # 거래종류 필터
+    if 매매 and 월세:
+        filters &= (Q(거래종류="매매") | Q(거래종류="월세"))
+    elif 매매:
+        filters &= Q(거래종류="매매")
+    elif 월세:
+        filters &= Q(거래종류="월세")
+
     # Property 쿼리셋에 첫 번째 이미지 URL을 annotate
-    다가구 = Property.objects.filter(매물종류="덕지식산업센터").annotate(first_image_url=Subquery(thumbnail)).order_by('-업로드_시간')
+    다가구 = Property.objects.filter(filters).annotate(first_image_url=Subquery(thumbnail)).order_by('-업로드_시간')
+
 
     # Paginator를 사용하여 페이지네이션 설정
     paginator = Paginator(다가구, items_per_page)
@@ -382,14 +408,26 @@ def multi(request):
     return render(request, "mom/m_multi.html", context)
 
 def store(request):
+    매매 = request.GET.get('매매', None)
+    월세 = request.GET.get('월세', None)
+    filters = Q(매물종류="향지식산업센터")
+
     items_per_page = 8 # 한 페이지에 보여줄 아이템의 수
     page = request.GET.get('page', 1) # 현재 페이지 번호를 쿼리 파라미터에서 가져오거나, 없으면 1로 설정
     # 썸네일 서브쿼리
     # OuterRef를 사용하여 외부 쿼리(Property)의 기본 키(pk)를 참조
     thumbnail = ImageGroup.objects.filter(property=OuterRef('pk')).order_by('created_at').values('이미지')[:1] # annotate로 붙이기 위해 값만 가져온다.
     
+    # 거래종류 필터
+    if 매매 and 월세:
+        filters &= (Q(거래종류="매매") | Q(거래종류="월세"))
+    elif 매매:
+        filters &= Q(거래종류="매매")
+    elif 월세:
+        filters &= Q(거래종류="월세")
+        
     # Property 쿼리셋에 첫 번째 이미지 URL을 annotate
-    점포 = Property.objects.filter(매물종류="향지식산업센터").annotate(first_image_url=Subquery(thumbnail)).order_by('-업로드_시간')
+    점포 = Property.objects.filter(filters).annotate(first_image_url=Subquery(thumbnail)).order_by('-업로드_시간')
 
     # Paginator를 사용하여 페이지네이션 설정
     paginator = Paginator(점포, items_per_page)

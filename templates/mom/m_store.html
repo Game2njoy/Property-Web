@@ -36,62 +36,27 @@
             <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                 <h1 class="display-5 mb-3 jal-go">향동 - 지식산업센터 매물</h1>
             </div>
+
+            <div class="container text-start mb-5 ps-4 border border-grey bg-white pt-1 text-dark wow fadeInUp position-relative rounded border-2 shadow" data-wow-delay="0.1s">
+                <div class="row position-absolute bg-white px-2" style="top: -11px; left: 25px;">필터</div>
+                <div class="row pt-4" style="padding-bottom: 8px">
+                    <div class="form-check col-auto">
+                        <input class="form-check-input" type="checkbox" value="매매" id="매매" onchange="redirectToView()">
+                        <label class="form-check-label" for="매매">
+                          매매
+                        </label>
+                      </div>
+                    <div class="form-check col-auto">
+                        <input class="form-check-input" type="checkbox" value="월세" id="월세" onchange="redirectToView()">
+                        <label class="form-check-label" for="월세">
+                          월세
+                        </label>
+                      </div>
+                </div>
+            </div>
+
             <div class="row g-4">
-              {% comment %} {% for store in 점포 %}
-              <div class="col-xl-3 col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                  <div class="product-item">
-                      <div class="position-relative bg-light overflow-hidden"> 
-                          <img class="img-fluid w-100" src="{{ MEDIA_URL }}{{ store.first_image_url }}" alt="" style="height: 300px; object-fit: cover; ">
-                          <div class="d-flex position-absolute start-0 top-0 m-2" style="flex-wrap: wrap">
-                              <div class="badge bg-body rounded text-white py-1 px-3 ms-1 mt-1" style="font-size: 10px; color: red;">New</div>
-                              {% if store.인기 %}
-                              <div class="badge bg-secondary rounded text-white py-1 px-1 ms-1 mt-1" style="font-size: 10px;">인기</div>
-                              {% endif %}
-                              {% if store.신축 %}
-                              <div class="badge bg-primary rounded text-white py-1 px-1 ms-1 mt-1" style="font-size: 10px;">신축</div>
-                              {% endif %}
-                              {% if store.급매 %}
-                              <div class="badge bg-success rounded text-white py-1 px-1 ms-1 mt-1" style="font-size: 10px;">급매</div>
-                              {% endif %}
-                              {% if store.저렴 %}
-                              <div class="badge bg-warning rounded text-white py-1 px-1 ms-1 mt-1" style="font-size: 10px;">저렴</div>
-                              {% endif %}
-                              {% if store.추천 %}
-                              <div class="badge bg-body rounded text-white py-1 px-1 ms-1 mt-1" style="font-size: 10px;" id="green">추천</div>
-                              {% endif %}
-                              {% if store.강력추천 %}
-                              <div class="badge bg-danger rounded text-white py-1 px-1 ms-1 mt-1" style="font-size: 10px;">강력추천</div>
-                              {% endif %}
-                              {% if store.즉시입주 %}
-                              <div class="badge bg-info rounded text-white py-1 px-1 ms-1 mt-1" style="font-size: 10px;">즉시입주</div>
-                              {% endif %}
-                          </div>
-                      </div>
-                      <div class="text-center px-4 pt-4 pb-3">
-                          <a class="d-block h5 mb-2 jal-go" href="{% url "detail" store.id %}"><span class="text-primary">{{ store.거래종류 }}</span>
-                              {% if store.매매가억 %}<span> {{ store.매매가억 }}억</span>{% endif %}
-                               {{ store.매매가 }}{% if store.거래종류 == '월세' %}<span>/{{ store.월세 }}</span>{% endif %}</a>
-                          <div class="text-dark me-1" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ store.제목 }}</div>
-                          <span class="text-body"></span>
-                      </div>
-                      <div class="border-top text-center">
-                          <small class="py-2">
-                              {{ store.지역 }}
-                          </small>
-                      </div>
-                      <div class="d-flex border-top">
-                          <small class="w-50 text-center border-end py-2">
-  
-                                  전용 {{ store.전면치환 }}m<sup>2</sup>
-                          </small>
-                          <small class="w-50 text-center py-2">
-     
-                                  {{ store.해당층 }} / {{ store.전체층 }} 층
-                          </small>
-                      </div>
-                  </div>
-              </div>
-              {% endfor %} {% endcomment %}
+              
               <div id="loading" class="jal-go text-center" style="display: none;">
                 <p>매물 불러오는 중...</p>
               </div>    
@@ -119,8 +84,12 @@
 
         isLoading = true;
         document.getElementById('loading').style.display = 'block';
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const 매매 = urlParams.has('매매') ? '1' : '';
+        const 월세 = urlParams.has('월세') ? '1' : '';
 
-        fetch(`/store?page=${page}`, {
+        fetch(`/store?page=${page}&매매=${매매}&월세=${월세}`, {
             method: 'GET',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
@@ -201,5 +170,38 @@
     window.addEventListener('scroll', handleScroll);
 });
   </script>
+
+  <script>
+    function redirectToView() {
+        let 매매 = document.getElementById('매매').checked;
+        let 월세 = document.getElementById('월세').checked;
+        let url = new URL(window.location.href);
+    
+        if (매매) {
+            url.searchParams.set('매매', '1');
+        } else {
+            url.searchParams.delete('매매');
+        }
+    
+        if (월세) {
+            url.searchParams.set('월세', '1');
+        } else {
+            url.searchParams.delete('월세');
+        }
+    
+        window.location.href = url.toString();
+    }
+    
+    window.onload = function() {
+        let urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('매매')) {
+            document.getElementById('매매').checked = true;
+        }
+        if (urlParams.has('월세')) {
+            document.getElementById('월세').checked = true;
+        }
+    }
+    </script>
+
 {% endblock body %}
 
