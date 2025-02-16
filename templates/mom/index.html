@@ -42,13 +42,15 @@
     }
 
 </style>
-    <!-- 팝업창 -->
-    {% comment %} <div id="popup" class="jal-go container shadow" style="padding: 0px">
+    <!-- 팝업창 (max-width: 팝업창 크기)-->
+    <div id="popup" class="jal-go container shadow" style="padding: 0px; max-width: 600px;"> 
         <div class="border-bottom text-center pt-2 pb-1 text-dark popup-header">알림</div>
        <div class="pt-4 px-4 pb-3">
             <div class="row">
                 <div class="col">
-                    <a href="https://xn--oy2b15bl6nb1dcwo.com/detail/125/" target="_blank"><img src="{% static 'mom/img/popup.png' %}" class="popup-img" alt="팝업"></a>
+                    {% comment %} <a href="https://xn--oy2b15bl6nb1dcwo.com/detail/125/" target="_blank"> {% endcomment %}
+                        <img src="{% static 'mom/img/popup2.png' %}" class="popup-img" alt="팝업">
+                    {% comment %} </a> {% endcomment %}
                 </div>
             </div>
             <div class="row">
@@ -61,7 +63,7 @@
                 </div>
        </div>
         </div>
-    </div> {% endcomment %}
+    </div>
 
     <!-- Carousel Start -->
     <div class="container-fluid p-0 mb-5 wow fadeIn" data-wow-delay="0.1s">

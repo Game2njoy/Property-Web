@@ -324,6 +324,14 @@
                 } else {
                     // 로그인 실패 시 실행할 동작, 예를 들어, 에러 메시지를 알림으로 표시
                     alert(data.error);
+                    
+                    // 입력 필드 초기화 및 활성화
+                    document.getElementById("loginInputId").value = "";
+                    document.getElementById("loginInputPassword1").value = "";
+
+                    // 모달 필드 재활성화
+                    const inputs = document.querySelectorAll("#loginModal input");
+                    inputs.forEach((input) => (input.disabled = false));
                 }
             })
             .catch(error => console.error('Error:', error)); // 요청 실패 시 에러 로깅

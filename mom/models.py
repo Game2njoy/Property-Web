@@ -44,6 +44,7 @@ class Property(models.Model):
     급매 = models.BooleanField(default=False)
     저렴 = models.BooleanField(default=False)
     내용 = models.TextField(blank=True)
+    호수 = models.CharField(max_length=255, blank=True, null=True)
 
 class ImageGroup(models.Model):
     property = models.ForeignKey(Property, related_name='images', on_delete=models.CASCADE)

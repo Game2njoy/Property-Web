@@ -112,6 +112,7 @@ def sells_upload(request):
             사용승인일 = request.POST.get('사용승인일'),
             네이버주소 = request.POST.get('주소'),
             내용 = request.POST.get('content'),
+            호수 = request.POST.get('호수'),
         )
         
         if 인기:
@@ -571,6 +572,7 @@ def sell_update(request, id):
         property.사용승인일 = request.POST.get('사용승인일')
         property.네이버주소 = request.POST.get('주소')
         property.내용 = request.POST.get('content')
+        property.호수 = request.POST.get('호수')
 
         if 인기:
             property.인기 = 인기
